@@ -38,30 +38,18 @@ android {
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(project(":drawsvg:core"))
+    api("com.github.dapadz:drawsvg-core:0.0.3")
 }
 
 afterEvaluate {
     publishing {
         publications {
-            create<MavenPublication>("Release") {
-                groupId = "com.dapadz"
-                artifactId = "drawsvg"
-                version = "1.0.0"
-                pom { name.set("drawsvg") }
+            create<MavenPublication>("release") {
+                groupId = "com.github.dapadz"
+                artifactId = "drawsvg-view"
+                version = "0.0.3"
                 from(components["release"])
-            }
-        }
-        repositories {
-            maven {
-                name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/dapadz/Drawsvg")
-                credentials {
-                    username = (findProperty("gpr.user") as String?)
-                        ?: System.getenv("USERNAME")
-                    password = (findProperty("gpr.key") as String?)
-                        ?: System.getenv("GITHUB_TOKEN")
-                }
+                pom { name.set("drawsvg-view") }
             }
         }
     }
