@@ -2,4 +2,4 @@ jdk:
   - openjdk17
 
 install:
-  - ./gradlew clean :drawsvg:view:publishReleasePublicationToMavenLocal -xlint -xtest --no-daemon
+  - ./gradlew -x lint -x test :drawsvg:core:publish :drawsvg:view:publish
