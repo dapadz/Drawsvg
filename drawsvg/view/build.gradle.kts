@@ -3,10 +3,9 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("maven-publish")
 }
-
 android {
     namespace = "com.dapadz.drawsvg.view"
-    compileSdk { version = release(36) }
+    compileSdk = 36
     defaultConfig {
         minSdk = 24
         consumerProguardFiles("consumer-rules.pro")
@@ -24,9 +23,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
+    kotlinOptions { jvmTarget = "11" }
     publishing {
         singleVariant("release") {
             withSourcesJar()
@@ -34,33 +31,22 @@ android {
         }
     }
 }
-
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(project(":drawsvg:core"))
+    api(project(":drawsvg:core"))
 }
-
 afterEvaluate {
     publishing {
         publications {
             create<MavenPublication>("Release") {
-                groupId = "com.dapadz"
-                artifactId = "drawsvg"
-                version = "1.0.0"
-                pom { name.set("drawsvg") }
+                groupId = "com.github.dapadz"
+                artifactId = "drawsvg-view"
+                version = "0.0.7"
                 from(components["release"])
-            }
-        }
-        repositories {
-            maven {
-                name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/dapadz/Drawsvg")
-                credentials {
-                    username = (findProperty("gpr.user") as String?)
-                        ?: System.getenv("USERNAME")
-                    password = (findProperty("gpr.key") as String?)
-                        ?: System.getenv("GITHUB_TOKEN")
+                pom {
+                    name.set("drawsvg-view")
+                    description.set("Android view layer for drawsvg")
                 }
             }
         }
