@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.dapadz.drawsvg.view"
-    compileSdk { version = release(36) }
+    compileSdk = 36
     defaultConfig {
         minSdk = 24
         consumerProguardFiles("consumer-rules.pro")
@@ -38,31 +38,22 @@ android {
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(project(":drawsvg:core"))
+    api("com.github.dapadz:drawsvg-core:0.0.5")
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("Release") {
-                groupId = "com.dapadz"
-                artifactId = "drawsvg"
-                version = "1.0.0"
-                pom { name.set("drawsvg") }
-                from(components["release"])
+publishing {
+    publications {
+        create<MavenPublication>("release") {
+            groupId = "com.github.dapadz"
+            artifactId = "drawsvg-view"
+            version = "0.0.5"
+            from(components["release"])
+            pom {
+                name.set("drawsvg-view")
             }
         }
-        repositories {
-            maven {
-                name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/dapadz/Drawsvg")
-                credentials {
-                    username = (findProperty("gpr.user") as String?)
-                        ?: System.getenv("USERNAME")
-                    password = (findProperty("gpr.key") as String?)
-                        ?: System.getenv("GITHUB_TOKEN")
-                }
-            }
-        }
+    }
+    repositories {
+        mavenLocal()
     }
 }
