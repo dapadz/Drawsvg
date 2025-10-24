@@ -42,7 +42,7 @@ afterEvaluate {
             create<MavenPublication>("Release") {
                 groupId = "com.github.dapadz"
                 artifactId = "drawsvg-view"
-                version = "0.0.7"
+                version = "0.0.8"
                 from(components["release"])
                 pom {
                     name.set("drawsvg-view")

@@ -4,15 +4,9 @@ import android.R.attr.strokeWidth
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.ComposeShader
 import android.graphics.LinearGradient
-import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.PointF
-import android.graphics.PorterDuff
-import android.graphics.RadialGradient
-import android.graphics.RectF
 import android.graphics.Shader
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -21,13 +15,10 @@ import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
-import androidx.core.graphics.plus
 import androidx.core.graphics.withSave
-import androidx.core.graphics.withTranslation
 import com.dapadz.drawsvg.core.form.PathForm
 import com.dapadz.drawsvg.view.parser.AndroidSvgParser
 import java.io.InputStream
-import kotlin.ranges.contains
 
 class AndroidSvgView @JvmOverloads constructor(
     context: Context,
@@ -121,6 +112,7 @@ class AndroidSvgView @JvmOverloads constructor(
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (!hasOnClickListeners()) return super.onTouchEvent(event)
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 touchPoint = PointF(event.x, event.y)
